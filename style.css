@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+html,
+body {
+	background-color: black;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(45deg, #fa8bff 0%, #2bd2ff 52%, #2bff88 90%);
+}
+
+header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 12vh;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+	font-weight: 400;
+	font-size: 3.5rem;
+	padding-left: 100px;
+}
+
+main {
+	height: 88vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.error {
+	display: none;
+	padding: 40px 0;
+	font-size: 2rem;
+	text-align: center;
+	z-index: 9;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.3);
+	height: 70%;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	backdrop-filter: blur(100px);
+}
+
+.error h2 {
+	margin: 20px 0;
+	font-weight: 300;
+}
+
+.error .close {
+	cursor: pointer;
+	margin: 20px 0;
+	font-size: 2rem;
+	width: 150px;
+	height: 50px;
+	border-radius: 10px;
+}
+
+.todoContainer {
+	width: 40%;
+	max-height: 70vh;
+	overflow: auto;
+}
+
+.dateContainer {
+	background-color: rgba(255, 255, 255, 0.1);
+	font-size: 2.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 80px;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+.inputContainer {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	position: relative;
+    perspective: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* flex-direction: column; */
+	width: 100%;
+	height: 100px;
+	border-bottom: 2px solid grey;
+}
+
+.todoContainer::-webkit-scrollbar{
+	display: none;
+}
+
+.inputContainer::after {
+	display: inline-block;
+	content: "";
+	background-color: white;
+	left: 16%;
+	bottom: 26%;
+	height: 5px;
+	width: 0%;
+	position: absolute;
+	transition: width 0.5s;
+}
+
+.inputContainer::before {
+	display: inline-block;
+	content: "";
+	background-color: white;
+	left: 16%;
+	bottom: 26%;
+	height: 0%;
+	width: 5px;
+	position: absolute;
+	transition: height 0.5s;
+}
+
+
+#upLine {
+	right: 143px;
+	position: absolute;
+	width: 5px;
+	height: 0;
+	background-color: white;
+	transition: height 0.5s;
+}
+
+#leftLine {
+	right: 143px;
+    position: absolute;
+    width: 0;
+    top: 24px;
+    height: 5px;
+    background-color: white;
+    transition: width 0.5s;
+}
+
+#rightLine {
+	left: 98px;
+    position: absolute;
+    width: 0;
+    top: 24px;
+    height: 5px;
+    background-color: white;
+    transition: width 0.5s;
+}
+
+.filled:focus-within::after {
+	width: 60%;
+}
+
+.filled:focus-within::before ,
+.filled:focus-within #upLine{
+	height: 46%;
+}
+
+.filled:focus-within #leftLine {
+	width: 37.5%;
+}
+
+.filled:focus-within #rightLine {
+	width: 4.5%;
+}
+
+#taskText {
+	font-weight: 200;
+	font-size: 1rem;
+	outline: none;
+	padding-left: 50px;
+	background: none;
+	width: 60%;
+	height: 45%;
+	border-radius: 10px;
+	border: none;
+	border-bottom: 4px solid gray;
+}
+
+#inputLabel {
+	opacity: 0.6;
+	position: absolute;
+	font-size: 2.5rem;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	color: gray;
+	transition: transform 0.15s ease-in;
+}
+
+.inputContainer i {
+	font-size: 1.5rem;
+	padding-left: 20px;
+}
+
+
