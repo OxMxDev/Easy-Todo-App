@@ -5,11 +5,11 @@ const downLine = document.getElementById("downLine");
 const inputContainer = document.querySelector(".inputContainer");
 const dateContainer = document.querySelector(".dateContainer");
 const todoContainer = document.querySelector(".todoContainer");
-const clearDone = document.querySelector('.clearDoneBtn')
-const clearAll = document.querySelector('.clearAllBtn')
-const darkmode = document.querySelector('.darkmode')
+const clearDone = document.querySelector(".clearDoneBtn");
+const clearAll = document.querySelector(".clearAllBtn");
+const darkmode = document.querySelector(".darkmode");
 let inputVal;
-loadTasks()
+loadTasks();
 const date = new Date();
 const options = { weekday: "long", month: "long", day: "numeric" };
 const formattedDate = date.toLocaleDateString("en-US", options);
@@ -23,28 +23,25 @@ input.addEventListener("click", (event) => {
 	if (window.innerWidth > 1395) {
 		inputLabel.style.transform = "translate(-160px,-36px)";
 		inputLabel.style.fontSize = "16px";
-		input.style.borderBottom = "none"
-	}
-	else{
+		input.style.borderBottom = "none";
+	} else {
 		inputLabel.style.transform = "translate(-93px,-36px)";
-		input.style.borderBottom = "none"
+		input.style.borderBottom = "none";
 		inputLabel.style.fontSize = "16px";
 	}
 	event.stopPropagation();
 });
 
-
 document.body.addEventListener("click", () => {
-	if (input.value.trim() === "" && window.innerWidth>1395) {
+	if (input.value.trim() === "" && window.innerWidth > 1395) {
 		inputLabel.style.transform = "translate(-131px,-26px)";
-		input.style.borderBottom = "4px solid gray"
+		input.style.borderBottom = "4px solid gray";
 		inputLabel.style.fontSize = "";
-	}else if(input.value.trim() === "" && window.innerWidth<1395){
+	} else if (input.value.trim() === "" && window.innerWidth < 1395) {
 		inputLabel.style.transform = "translate(-77px,-7px)";
 		input.style.borderBottom = "4px solid gray";
 		inputLabel.style.fontSize = "";
-	} 
-	else {
+	} else {
 		input.focus();
 	}
 });
@@ -129,6 +126,22 @@ function addElements(taskText = inputVal, savedTime = null) {
 			? "5px solid #262162"
 			: "";
 	});
+	clearDone.addEventListener("click", () => {
+		document.querySelectorAll(".checkBoxStyle").forEach((checkBox) => {
+			const taskDiv = checkBox.parentElement.parentElement; // Find the taskDiv
+			if (taskDiv && todoContainer.contains(taskDiv)) {
+				todoContainer.removeChild(taskDiv); // Remove the taskDiv
+			}
+			console.log(taskDiv);
+		});
+	});
+
+	clearAll.addEventListener("click", () => {
+		const taskDiv = checkBox.parentElement.parentElement;
+		if (taskDiv && todoContainer.contains(taskDiv)) {
+			todoContainer.removeChild(taskDiv); // Remove the taskDiv
+		}
+	});
 
 	deleteIcon.addEventListener("click", () => {
 		taskdiv.remove();
@@ -163,7 +176,6 @@ function addElements(taskText = inputVal, savedTime = null) {
 	});
 }
 
-
 addbtn.addEventListener("click", () => {
 	inputVal = input.value.trim();
 	if (inputVal === "") {
@@ -176,45 +188,42 @@ addbtn.addEventListener("click", () => {
 	} else {
 		input.value = "";
 		setTimeout(() => {
-			if(window.innerWidth>1395){
+			if (window.innerWidth > 1395) {
 				inputLabel.style.transform = "translate(-160px,-36px)";
 				inputLabel.style.fontSize = "16px";
-			}else{
+			} else {
 				inputLabel.style.transform = "translate(-89px,-36px)";
 				inputLabel.style.fontSize = "16px";
 			}
 		}, 10);
-        input.focus()
+		input.focus();
 		addElements();
-		
 	}
 });
 
-darkmode.addEventListener('click',()=>{
-	darkmode.classList.toggle('lightmode')
-	if(darkmode.classList.contains('lightmode')){
-		darkmode.style.background = "white"
-		document.documentElement.style.setProperty('--color',"black")
-		document.body.style.background = "black"
-		document.querySelector('.header').style.color = "white"
-		todoContainer.style.color = "white"
-		inputContainer.style.color = "white"
-		inputLabel.style.color = "white"
-		clearDone.style.color = "white"
-		clearAll.style.color = "white"
-		input.style.color = "white"
-	}else{
-		darkmode.style.background = "black"
-		document.documentElement.style.setProperty('--color',"white")
+darkmode.addEventListener("click", () => {
+	darkmode.classList.toggle("lightmode");
+	if (darkmode.classList.contains("lightmode")) {
+		darkmode.style.background = "white";
+		document.documentElement.style.setProperty("--color", "black");
+		document.body.style.background = "black";
+		document.querySelector(".header").style.color = "white";
+		todoContainer.style.color = "white";
+		inputContainer.style.color = "white";
+		inputLabel.style.color = "white";
+		clearDone.style.color = "white";
+		clearAll.style.color = "white";
+		input.style.color = "white";
+	} else {
+		darkmode.style.background = "black";
+		document.documentElement.style.setProperty("--color", "white");
 		document.body.style.background = "";
 		document.querySelector(".header").style.color = "";
 		todoContainer.style.color = "";
 		inputContainer.style.color = "";
 		inputLabel.style.color = "";
 	}
-})
-
-
+});
 
 function saveTasks() {
 	let tasks = [];
@@ -228,8 +237,7 @@ function saveTasks() {
 	localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-
 function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.forEach(task => addElements(task.text, task.time));
+	const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+	tasks.forEach((task) => addElements(task.text, task.time));
 }
