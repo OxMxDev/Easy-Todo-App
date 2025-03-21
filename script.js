@@ -222,6 +222,7 @@ darkmode.addEventListener('click',()=>{
 		inputLabel.style.color = "white"
 		clearDone.style.color = "white"
 		clearAll.style.color = "white"
+		input.style.color = "white"
 	}else{
 		darkmode.style.background = "black"
 		document.documentElement.style.setProperty('--color',"white")
