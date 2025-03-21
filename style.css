@@ -42,7 +42,7 @@ main {
 	text-align: center;
 	z-index: 9;
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(255, 255, 255, 0.1);
 	height: 70%;
 	left: 50%;
 	top: 50%;
@@ -125,7 +125,7 @@ main {
 }
 
 #upLine {
-	right: 143px;
+	right: 134px;
 	position: absolute;
 	width: 5px;
 	height: 0;
@@ -134,7 +134,7 @@ main {
 }
 
 #leftLine {
-	right: 143px;
+	right: 135px;
 	position: absolute;
 	width: 0;
 	top: 24px;
@@ -144,7 +144,7 @@ main {
 }
 
 #rightLine {
-	left: 98px;
+	left: 90px;
 	position: absolute;
 	width: 0;
 	top: 24px;
@@ -154,21 +154,18 @@ main {
 }
 
 .filled:focus-within::after {
-	width: 60%;
-}
-
-.filled:focus-within::before,
-.filled:focus-within #upLine {
-	height: 46%;
-}
-
-.filled:focus-within #leftLine {
-	width: 37.5%;
-}
-
-.filled:focus-within #rightLine {
-	width: 4.5%;
-}
+		width: 60%;
+	}
+	.filled:focus-within::before,
+	.filled:focus-within #upLine {
+		height: 46%;
+	}
+	.filled:focus-within #leftLine {
+		width: 34%;
+	}
+	.filled:focus-within #rightLine {
+		width: 4.5%;
+	}
 
 #taskText {
 	font-weight: 200;
@@ -186,17 +183,38 @@ main {
 #inputLabel {
 	opacity: 0.6;
 	position: absolute;
-	font-size: 2.5rem;
+	font-size: 2rem;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%);
-	color: gray;
+	transform: translate(-56%, -53%);
+	color: rgba(0, 0, 0, 0.4);
 	transition: transform 0.15s ease-in;
 }
 
 .inputContainer i {
 	font-size: 1.5rem;
 	padding-left: 20px;
+}
+
+.buttons{
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+}
+
+.clearDoneBtn, .clearAllBtn{
+	float: right;
+	/* margin-top: 20px; */
+	margin-right: 10px;
+	border: none;
+	width: 150px;
+	height: 30px;
+	cursor: pointer;
+	background: none;
+}
+
+.clearAllBtn:hover,.clearDoneBtn:hover{
+	box-shadow: 0px 0px 1px 0px black;
 }
 
 @media only screen and (max-width: 1395px) {
@@ -217,41 +235,103 @@ main {
 	#inputLabel {
 		white-space: nowrap;
 		font-size: 1rem;
-	}
-
-	#upLine {
-		right: 143px;
-		position: absolute;
-		width: 5px;
-		height: 0;
-		background-color: white;
-		display: none;
-		transition: height 0.5s;
-	}
-
-	#leftLine {
-		right: 143px;
-		position: absolute;
-		width: 0;
-		top: 24px;
-		height: 5px;
-		display: none;
-		background-color: white;
-		transition: width 0.5s;
-	}
-
-	#rightLine {
-		display: none;
-		left: 98px;
-		position: absolute;
-		width: 0;
-		top: 24px;
-		height: 5px;
-		background-color: white;
-		transition: width 0.5s;
+		
 	}
 	.dateContainer {
 		white-space: nowrap;
 		font-size: 1.5rem;
 	}
+
+	.inputContainer::after {
+		display: inline-block;
+		content: "";
+		background-color: white;
+		left: 15%;
+		bottom: 26%;
+		height: 5px;
+		width: 0%;
+		position: absolute;
+		transition: width 0.5s;
+	}
+
+	.inputContainer::before {
+		display: inline-block;
+		content: "";
+		background-color: white;
+		left: 13%;
+		bottom: 26%;
+		height: 0%;
+		width: 5px;
+		position: absolute;
+		transition: height 0.5s;
+	}
+
+	#upLine {
+		right: 72px;
+		position: absolute;
+		width: 5px;
+		height: 0;
+		background-color: white;
+		transition: height 0.5s;
+	}
+
+	#leftLine {
+		right: 74px;
+		position: absolute;
+		width: 0;
+		top: 24px;
+		height: 5px;
+		/* display: none; */
+		background-color: white;
+		transition: width 0.5s;
+	}
+
+	#rightLine {
+		left: 40px;
+		position: absolute;
+		width: 0;
+		top: 24px;
+		height: 5px;
+		background-color: white;
+		transition: width 0.5s;
+	}
+
+	.filled:focus-within::after {
+		width: 60%;
+	}
+	.filled:focus-within::before,
+	.filled:focus-within #upLine {
+		height: 46%;
+	}
+	.filled:focus-within #leftLine {
+		width: 15.5%;
+	}
+	.filled:focus-within #rightLine {
+		width: 4.5%;
+	}
+	.error {
+	display: none;
+	padding: 40px 0;
+	font-size: 2rem;
+	text-align: center;
+	z-index: 9;
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.1);
+	height: 70%;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
+	backdrop-filter: blur(100px);
+}
+
+.buttons{
+	display: flex;
+	margin-left: 10px;
+}
+}
+
+.checkBoxStyle{
+	box-shadow: inset white 0px 0px 2px 5px;
+
 }

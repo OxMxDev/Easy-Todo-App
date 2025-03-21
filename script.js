@@ -5,6 +5,8 @@ const downLine = document.getElementById("downLine");
 const inputContainer = document.querySelector(".inputContainer");
 const dateContainer = document.querySelector(".dateContainer");
 const todoContainer = document.querySelector(".todoContainer");
+const clearDone = document.querySelector('.clearDoneBtn')
+const clearAll = document.querySelector('.clearAllBtn')
 let inputVal;
 
 const date = new Date();
@@ -18,11 +20,13 @@ let seconds = date.getSeconds();
 
 input.addEventListener("click", (event) => {
 	if (window.innerWidth > 1395) {
-		inputLabel.style.transform = "translate(-180px,-36px)";
+		inputLabel.style.transform = "translate(-160px,-36px)";
 		inputLabel.style.fontSize = "16px";
+		input.style.borderBottom = "none"
 	}
 	else{
-		inputLabel.style.transform = "translate(-92px,-36px)";
+		inputLabel.style.transform = "translate(-93px,-36px)";
+		input.style.borderBottom = "none"
 		inputLabel.style.fontSize = "16px";
 	}
 	event.stopPropagation();
@@ -30,10 +34,16 @@ input.addEventListener("click", (event) => {
 
 
 document.body.addEventListener("click", () => {
-	if (input.value.trim() === "") {
-		inputLabel.style.transform = "";
+	if (input.value.trim() === "" && window.innerWidth>1395) {
+		inputLabel.style.transform = "translate(-131px,-26px)";
+		input.style.borderBottom = "4px solid gray"
 		inputLabel.style.fontSize = "";
-	} else {
+	}else if(input.value.trim() === "" && window.innerWidth<1395){
+		inputLabel.style.transform = "translate(-77px,-7px)";
+		input.style.borderBottom = "4px solid gray";
+		inputLabel.style.fontSize = "";
+	} 
+	else {
 		input.focus();
 	}
 });
@@ -109,12 +119,35 @@ function addElements() {
 
 	taskdiv.append(leftdiv);
 	taskdiv.append(rightdiv);
-	todoContainer.append(taskdiv);
+	let buttonsDiv = document.querySelector('.buttons')
+	todoContainer.insertBefore(taskdiv,buttonsDiv);
 
 	checkBox.addEventListener("click", () => {
-		checkBox.style.boxShadow = "inset white 0px 0px 2px 5px";
-		taskdiv.style.borderLeft = "5px solid #262162";
+		checkBox.classList.toggle('checkBoxStyle')
+		if(checkBox.classList.contains('checkBoxStyle')){
+			taskdiv.style.borderLeft = "5px solid #262162";
+		}else{
+			taskdiv.style.borderLeft=""
+		}
 	});
+
+	clearDone.addEventListener("click", () => {
+		document.querySelectorAll(".checkBoxStyle").forEach((checkBox) => {
+			const taskDiv = checkBox.parentElement.parentElement; // Find the taskDiv
+			if (taskDiv && todoContainer.contains(taskDiv)) {
+				todoContainer.removeChild(taskDiv); // Remove the taskDiv
+			}
+		});
+	});
+
+	clearAll.addEventListener("click", () => {
+		const taskDiv = checkBox.parentElement.parentElement;
+		if (taskDiv && todoContainer.contains(taskDiv)) {
+			todoContainer.removeChild(taskDiv); // Remove the taskDiv
+		}
+	});
+
+
 
 	edit.addEventListener("click", () => {
 				
@@ -163,8 +196,13 @@ addbtn.addEventListener("click", () => {
 	} else {
 		input.value = "";
 		setTimeout(() => {
-			inputLabel.style.transform = "translate(-180px,-36px)";
-			inputLabel.style.fontSize = "16px";
+			if(window.innerWidth>1395){
+				inputLabel.style.transform = "translate(-160px,-36px)";
+				inputLabel.style.fontSize = "16px";
+			}else{
+				inputLabel.style.transform = "translate(-89px,-36px)";
+				inputLabel.style.fontSize = "16px";
+			}
 		}, 10);
         input.focus()
 		addElements();
