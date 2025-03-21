@@ -16,10 +16,39 @@ body {
 
 header {
 	display: flex;
+	padding: 20px;
 	align-items: center;
+	justify-content: space-between;
 	width: 100%;
 	height: 12vh;
 	background-color: rgba(255, 255, 255, 0.1);
+}
+
+header .darkmode{
+	width: 80px;
+	height: 40px;
+	border-radius: 20px;
+	background-color: black;
+	position: relative;
+}
+
+:root{
+	--color:white
+}
+
+.darkmode::after{
+	content: '';
+	position: absolute;
+	background-color: var(--color);
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	transform: translate(-110%,-50%);
+	transition: transform 0.2s ease-in;
+}
+
+.lightmode::after{
+	transform: translate(0%,-50%);
 }
 
 header h1 {

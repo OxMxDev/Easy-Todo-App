@@ -7,6 +7,7 @@ const dateContainer = document.querySelector(".dateContainer");
 const todoContainer = document.querySelector(".todoContainer");
 const clearDone = document.querySelector('.clearDoneBtn')
 const clearAll = document.querySelector('.clearAllBtn')
+const darkmode = document.querySelector('.darkmode')
 let inputVal;
 
 const date = new Date();
@@ -208,3 +209,26 @@ addbtn.addEventListener("click", () => {
 		addElements();
 	}
 });
+
+darkmode.addEventListener('click',()=>{
+	darkmode.classList.toggle('lightmode')
+	if(darkmode.classList.contains('lightmode')){
+		darkmode.style.background = "white"
+		document.documentElement.style.setProperty('--color',"black")
+		document.body.style.background = "black"
+		document.querySelector('.header').style.color = "white"
+		todoContainer.style.color = "white"
+		inputContainer.style.color = "white"
+		inputLabel.style.color = "white"
+		clearDone.style.color = "white"
+		clearAll.style.color = "white"
+	}else{
+		darkmode.style.background = "black"
+		document.documentElement.style.setProperty('--color',"white")
+		document.body.style.background = "";
+		document.querySelector(".header").style.color = "";
+		todoContainer.style.color = "";
+		inputContainer.style.color = "";
+		inputLabel.style.color = "";
+	}
+})
