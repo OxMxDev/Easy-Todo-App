@@ -17,10 +17,17 @@ let minutes = date.getMinutes();
 let seconds = date.getSeconds();
 
 input.addEventListener("click", (event) => {
-	inputLabel.style.transform = "translate(-180px,-36px)";
-	inputLabel.style.fontSize = "16px";
+	if (window.innerWidth > 1395) {
+		inputLabel.style.transform = "translate(-180px,-36px)";
+		inputLabel.style.fontSize = "16px";
+	}
+	else{
+		inputLabel.style.transform = "translate(-92px,-36px)";
+		inputLabel.style.fontSize = "16px";
+	}
 	event.stopPropagation();
 });
+
 
 document.body.addEventListener("click", () => {
 	if (input.value.trim() === "") {

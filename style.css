@@ -86,7 +86,7 @@ main {
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 10px;
 	position: relative;
-    perspective: 500px;
+	perspective: 500px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -96,7 +96,7 @@ main {
 	border-bottom: 2px solid grey;
 }
 
-.todoContainer::-webkit-scrollbar{
+.todoContainer::-webkit-scrollbar {
 	display: none;
 }
 
@@ -124,7 +124,6 @@ main {
 	transition: height 0.5s;
 }
 
-
 #upLine {
 	right: 143px;
 	position: absolute;
@@ -136,30 +135,30 @@ main {
 
 #leftLine {
 	right: 143px;
-    position: absolute;
-    width: 0;
-    top: 24px;
-    height: 5px;
-    background-color: white;
-    transition: width 0.5s;
+	position: absolute;
+	width: 0;
+	top: 24px;
+	height: 5px;
+	background-color: white;
+	transition: width 0.5s;
 }
 
 #rightLine {
 	left: 98px;
-    position: absolute;
-    width: 0;
-    top: 24px;
-    height: 5px;
-    background-color: white;
-    transition: width 0.5s;
+	position: absolute;
+	width: 0;
+	top: 24px;
+	height: 5px;
+	background-color: white;
+	transition: width 0.5s;
 }
 
 .filled:focus-within::after {
 	width: 60%;
 }
 
-.filled:focus-within::before ,
-.filled:focus-within #upLine{
+.filled:focus-within::before,
+.filled:focus-within #upLine {
 	height: 46%;
 }
 
@@ -200,4 +199,59 @@ main {
 	padding-left: 20px;
 }
 
+@media only screen and (max-width: 1395px) {
+	body {
+		background-image: none;
+	}
+	header {
+		align-items: center;
+		justify-content: center;
+		transform: translate(-42px, 10px);
+	}
+	header h1 {
+		font-size: 1.5rem;
+	}
+	.todoContainer {
+		width: 80%;
+	}
+	#inputLabel {
+		white-space: nowrap;
+		font-size: 1rem;
+	}
 
+	#upLine {
+		right: 143px;
+		position: absolute;
+		width: 5px;
+		height: 0;
+		background-color: white;
+		display: none;
+		transition: height 0.5s;
+	}
+
+	#leftLine {
+		right: 143px;
+		position: absolute;
+		width: 0;
+		top: 24px;
+		height: 5px;
+		display: none;
+		background-color: white;
+		transition: width 0.5s;
+	}
+
+	#rightLine {
+		display: none;
+		left: 98px;
+		position: absolute;
+		width: 0;
+		top: 24px;
+		height: 5px;
+		background-color: white;
+		transition: width 0.5s;
+	}
+	.dateContainer {
+		white-space: nowrap;
+		font-size: 1.5rem;
+	}
+}
