@@ -125,7 +125,7 @@ main {
 }
 
 #upLine {
-	right: 134px;
+	right: 146px;
 	position: absolute;
 	width: 5px;
 	height: 0;
@@ -134,7 +134,7 @@ main {
 }
 
 #leftLine {
-	right: 135px;
+	right: 146px;
 	position: absolute;
 	width: 0;
 	top: 24px;
@@ -144,7 +144,7 @@ main {
 }
 
 #rightLine {
-	left: 90px;
+	left: 99px;
 	position: absolute;
 	width: 0;
 	top: 24px;
@@ -164,7 +164,7 @@ main {
 		width: 34%;
 	}
 	.filled:focus-within #rightLine {
-		width: 4.5%;
+		width: 7.5%;
 	}
 
 #taskText {
