@@ -9,7 +9,7 @@ const clearDone = document.querySelector('.clearDoneBtn')
 const clearAll = document.querySelector('.clearAllBtn')
 const darkmode = document.querySelector('.darkmode')
 let inputVal;
-
+loadTasks()
 const date = new Date();
 const options = { weekday: "long", month: "long", day: "numeric" };
 const formattedDate = date.toLocaleDateString("en-US", options);
@@ -49,7 +49,7 @@ document.body.addEventListener("click", () => {
 	}
 });
 
-function addElements() {
+function addElements(taskText = inputVal, savedTime = null) {
 	let taskdiv = document.createElement("div");
 	let leftdiv = document.createElement("div");
 	let rightdiv = document.createElement("div");
@@ -59,6 +59,7 @@ function addElements() {
 	let deleteIcon = document.createElement("i");
 	let timeSpan = document.createElement("span");
 
+	taskdiv.className = "newdiv";
 	taskdiv.style.display = "flex";
 	taskdiv.style.alignItems = "center";
 	taskdiv.style.height = "70px";
@@ -67,13 +68,11 @@ function addElements() {
 	taskdiv.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
 
 	leftdiv.style.width = "30%";
-	leftdiv.style.height = "100%";
 	leftdiv.style.display = "flex";
 	leftdiv.style.alignItems = "center";
 	leftdiv.style.gap = "20px";
 
 	rightdiv.style.width = "50%";
-	rightdiv.style.height = "100%";
 	rightdiv.style.display = "flex";
 	rightdiv.style.alignItems = "center";
 
@@ -83,13 +82,12 @@ function addElements() {
 	checkBox.style.border = "2px solid rgba(255,255,255,0.3)";
 	checkBox.style.borderRadius = "50%";
 
-	span.textContent = inputVal;
+	span.textContent = taskText;
 	span.style.color = "white";
 
 	edit.classList.add("fa-solid", "fa-pen-to-square");
 	edit.style.color = "white";
 	edit.style.margin = "0 20px";
-	edit.style.marginRight = "0";
 	edit.style.fontSize = "25px";
 	edit.style.cursor = "pointer";
 
@@ -99,15 +97,16 @@ function addElements() {
 	deleteIcon.style.fontSize = "25px";
 	deleteIcon.style.cursor = "pointer";
 
+	// Get current time if no savedTime is provided
 	let date2 = new Date();
-	let hours = date2.getHours();
-	hours = hours % 12 || 12;
-	let minutes = date2.getMinutes();
-	let seconds = date2.getSeconds();
+	let hours = date2.getHours() % 12 || 12;
+	let minutes = date2.getMinutes().toString().padStart(2, "0");
+	let seconds = date2.getSeconds().toString().padStart(2, "0");
+	let ampm = date2.getHours() >= 12 ? "PM" : "AM";
+	let currentTime = `${hours}:${minutes}:${seconds} ${ampm}`;
 
-	timeSpan.innerText = `${hours}:${minutes}:${seconds} ${
-		hours >= 12 ? "PM" : "AM"
-	}`;
+	timeSpan.innerText = savedTime || currentTime;
+	timeSpan.classList.add("task-time"); // Add class to identify timestamp
 	timeSpan.style.color = "white";
 	timeSpan.style.marginLeft = "50px";
 
@@ -120,70 +119,50 @@ function addElements() {
 
 	taskdiv.append(leftdiv);
 	taskdiv.append(rightdiv);
-	let buttonsDiv = document.querySelector('.buttons')
-	todoContainer.insertBefore(taskdiv,buttonsDiv);
+	let buttonsDiv = document.querySelector(".buttons");
+	todoContainer.insertBefore(taskdiv, buttonsDiv);
+	saveTasks();
 
 	checkBox.addEventListener("click", () => {
-		checkBox.classList.toggle('checkBoxStyle')
-		if(checkBox.classList.contains('checkBoxStyle')){
-			taskdiv.style.borderLeft = "5px solid #262162";
-		}else{
-			taskdiv.style.borderLeft=""
-		}
+		checkBox.classList.toggle("checkBoxStyle");
+		taskdiv.style.borderLeft = checkBox.classList.contains("checkBoxStyle")
+			? "5px solid #262162"
+			: "";
 	});
 
-	clearDone.addEventListener("click", () => {
-		document.querySelectorAll(".checkBoxStyle").forEach((checkBox) => {
-			const taskDiv = checkBox.parentElement.parentElement; // Find the taskDiv
-			if (taskDiv && todoContainer.contains(taskDiv)) {
-				todoContainer.removeChild(taskDiv); // Remove the taskDiv
-			}
-		});
+	deleteIcon.addEventListener("click", () => {
+		taskdiv.remove();
+		saveTasks();
 	});
-
-	clearAll.addEventListener("click", () => {
-		const taskDiv = checkBox.parentElement.parentElement;
-		if (taskDiv && todoContainer.contains(taskDiv)) {
-			todoContainer.removeChild(taskDiv); // Remove the taskDiv
-		}
-	});
-
-
 
 	edit.addEventListener("click", () => {
-				
-				if (leftdiv.querySelector("input")) return;
+		if (leftdiv.querySelector("input")) return;
 
-				let input = document.createElement("input");
-				input.type = "text";
-				input.value = span.textContent;
-				input.style.width = "100%";
-				input.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-				input.style.color = "white";
-				input.style.border = "none";
-				input.style.outline = "none";
-				input.style.padding = "5px";
+		let input = document.createElement("input");
+		input.type = "text";
+		input.value = span.textContent;
+		input.style.width = "100%";
+		input.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+		input.style.color = "white";
+		input.style.border = "none";
+		input.style.outline = "none";
+		input.style.padding = "5px";
 
-				leftdiv.replaceChild(input, span);
-				input.focus(); 
-				edit.classList.replace("fa-pen-to-square", "fa-floppy-disk");
+		leftdiv.replaceChild(input, span);
+		input.focus();
+		edit.classList.replace("fa-pen-to-square", "fa-floppy-disk");
 
-				
-				function saveEdit() {
-					span.textContent = input.value;
-					leftdiv.replaceChild(span, input);
-					edit.classList.replace("fa-floppy-disk", "fa-pen-to-square");
-					edit.removeEventListener("click", saveEdit); 
-				}
+		function saveEdit() {
+			span.textContent = input.value;
+			leftdiv.replaceChild(span, input);
+			edit.classList.replace("fa-floppy-disk", "fa-pen-to-square");
+			saveTasks();
+		}
 
-				edit.addEventListener("click", saveEdit, { once: true }); 
-			});
-
-			// ✅ Handle Deleting
-			deleteIcon.addEventListener("click", () => {
-				todoContainer.removeChild(taskdiv);
-			});
+		edit.addEventListener("click", saveEdit, { once: true });
+	});
 }
+
 
 addbtn.addEventListener("click", () => {
 	inputVal = input.value.trim();
@@ -207,6 +186,7 @@ addbtn.addEventListener("click", () => {
 		}, 10);
         input.focus()
 		addElements();
+		
 	}
 });
 
@@ -233,3 +213,23 @@ darkmode.addEventListener('click',()=>{
 		inputLabel.style.color = "";
 	}
 })
+
+
+
+function saveTasks() {
+	let tasks = [];
+	todoContainer.querySelectorAll(".newdiv").forEach(function (item) {
+		let span = item.querySelector("span"); // Get the task text
+		let timeSpan = item.querySelector(".task-time"); // Get the timestamp
+		if (span && timeSpan) {
+			tasks.push({ text: span.textContent.trim(), time: timeSpan.textContent });
+		}
+	});
+	localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(task => addElements(task.text, task.time));
+}
